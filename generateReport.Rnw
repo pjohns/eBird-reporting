@@ -1,0 +1,61 @@
+\documentclass{article}
+
+\usepackage[table]{xcolor}
+\usepackage[landscape, margin=.5in]{geometry}
+\usepackage{lscape}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+<<xtable1, results = tex, echo = FALSE, warning = FALSE>>=
+library(xtable)
+
+printReport = function(df, table_caption, scale){
+  print(xtable(df, caption = table_caption) , scalebox=scale)
+}
+@
+
+<<xtable1, results = tex, echo = FALSE, warning = FALSE>>=
+source("analyze.R")
+
+#result = PastMonth()
+backyard_may = BackyardMonth("May")
+printReport(backyard_may, "May 2017 - Backyard", "0.85")
+
+golf_course = createLocationSummary("Valley Hi Golf Course")
+printReport(golf_course, "Golf Course", "0.85")                                      
+
+life_list = LifeList("Backyard")
+printReport(life_list, "Backyard Lifelist", "0.85")
+
+heron = WhereDidISee("Great Blue Heron")
+printReport(heron, "Great Blue Heron Locations", "1")
+
+#comm <- paste0("\\hline \n \\multicolumn{2}{l}", "{\\scriptsize{* Only seen in flight}} \n")
+#print(xtable(life_list, caption = "April-May Backyard Sightings"),scalebox= "0.85", hline.after=c(-1, 0))
+
+all_locations = function(){
+  locations = WhereDidIGo("range","01-01-2017",Sys.Date())
+  locations = locations[,1]
+  for (i in 1:length(locations)){
+    report = LifeList(locations[i])
+    location_name = locations[i]
+    cap = paste(location_name, "Lifelist", sep = " ")
+    printReport(report, cap, "0.85")
+    cat('\\clearpage\n')
+    #clearpage
+  }
+}
+
+#all_locations()
+
+#backyard_ll = LifeList("Backyard")
+#printReport(backyard_ll, "Backyard LifeList", "0.85")
+
+
+#createReport(LifeList("Backyard"),"Backyard Lifelist", "1")
+@
+
+
+\end{document}
