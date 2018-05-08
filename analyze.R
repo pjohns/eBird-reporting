@@ -130,60 +130,22 @@ writeCSV = function(df, file_name){
 }
 
 convertNames = function(df){
-  
+  names = read.csv("common_names.csv", header = TRUE)
+
   df$Common.Name <- as.character(df$Common.Name)
-  df$Common.Name[df$Common.Name == "American Crow"] <- "Crow, American"
-  df$Common.Name[df$Common.Name == "American Kestrel"] <- "Kestrel, American"
-  df$Common.Name[df$Common.Name == "American Robin"] <- "Robin, American"
-  df$Common.Name[df$Common.Name == "Black-billed Magpie"] <- "Magpie, Black-billed"
-  df$Common.Name[df$Common.Name == "Black-capped Chickadee"] <- "Chickadee, Black-capped"
-  df$Common.Name[df$Common.Name == "Broad-tailed Hummingbird"] <- "Hummingbird, Broad-tailed"
-  df$Common.Name[df$Common.Name == "Chipping Sparrow"] <- "Sparrow, Chipping"
-  df$Common.Name[df$Common.Name == "Common Grackle"] <- "Grackle, Common"
-  df$Common.Name[df$Common.Name == "Cooper's Hawk"] <- "Hawk, Coopers"
-  df$Common.Name[df$Common.Name == "Dark-eyed Junco"] <- "Junco, Dark-eyed"
-  df$Common.Name[df$Common.Name == "Downy Woodpecker"] <- "Woodpecker, Downy"
-  df$Common.Name[df$Common.Name == "Eurasian Collared-Dove"] <- "Dove, Collared"
-  df$Common.Name[df$Common.Name == "European Starling"] <- "Starling, European"
-  df$Common.Name[df$Common.Name == "Great Blue Heron"] <- "Heron, Great Blue"
-  df$Common.Name[df$Common.Name == "House Finch"] <- "Finch, House"
-  df$Common.Name[df$Common.Name == "House Sparrow"] <- "Sparrow, House"
-  df$Common.Name[df$Common.Name == "House Wren"] <- "Wren, House"
-  df$Common.Name[df$Common.Name == "Lesser Goldfinch"] <- "Goldfinch, Lesser"
-  df$Common.Name[df$Common.Name == "Mountain Chickadee"] <- "Chickadee, Mountain"
-  df$Common.Name[df$Common.Name == "Mourning Dove"] <- "Dove, Mourning"
-  df$Common.Name[df$Common.Name == "Northern Flicker"] <- "Flicker, Northern"
-  df$Common.Name[df$Common.Name == "Rock Pigeon (Feral Pigeon)"] <- "Pigeon, Rock"
-  df$Common.Name[df$Common.Name == "Spotted Towhee"] <- "Towhee, Spotted"
-  df$Common.Name[df$Common.Name == "Woodhouse's Scrub-Jay"] <- "Jay, Scrub"
-  df$Common.Name[df$Common.Name == "Blue Jay"] <- "Jay, Blue"
-  df$Common.Name[df$Common.Name == "Yellow-rumped Warbler"] <- "Warbler, Yellow-rumped"
-  df$Common.Name[df$Common.Name == "Red-tailed Hawk"] <- "Hawk, Red-tailed"
-  df$Common.Name[df$Common.Name == "American Goldfinch"] <- "Goldfinch, American"
-  df$Common.Name[df$Common.Name == "Great Horned Owl"] <- "Owl, Great Horned"
-  df$Common.Name[df$Common.Name == "White-crowned Sparrow"] <- "Sparrow, White-crowned"
-  df$Common.Name[df$Common.Name == "Black-headed Grosbeak"] <- "Grosbeak, Black-headed"
-  df$Common.Name[df$Common.Name == "Barn Swallow"] <- "Swallow, Barn"
-  df$Common.Name[df$Common.Name == "Tree Swallow"] <- "Swallow, Tree"
-  df$Common.Name[df$Common.Name == "Canada Goose"] <- "Goose, Canada"
-  df$Common.Name[df$Common.Name == "Western Tanager"] <- "Tanager, Western"
-  df$Common.Name[df$Common.Name == "Lazuli Bunting"] <- "Bunting, Lazuli"
-  df$Common.Name[df$Common.Name == "Brewer's Blackbird"] <- "Blackbird, Brewer's"
-  df$Common.Name[df$Common.Name == "Red-winged Blackbird"] <- "Blackbird, Red-winged"
-  df$Common.Name[df$Common.Name == "Brown-headed Cowbird"] <- "Cowbird, Brown-headed"
-  df$Common.Name[df$Common.Name == "Yellow-headed Blackbird"] <- "Blackbird, Yellow-headed"
-  df$Common.Name[df$Common.Name == "Bullock's Oriole"] <- "Oriole, Bullock's"
-  df$Common.Name[df$Common.Name == "Northern Harrier"] <- "Harrier, Northern"
-  df$Common.Name[df$Common.Name == "Western Wood-Pewee"] <- "Pewee, Western-Wood-"
-  df$Common.Name[df$Common.Name == "White-breasted Nuthatch"] <- "Nuthatch, White-breasted"
+  names$ebird_name <- as.character(names$ebird_name)
+  names$common_name <- as.character(names$common_name)
   
-  df$Common.Name[df$Common.Name == "Goose, Canada"] <- "Goose, Canada*"
-  df$Common.Name[df$Common.Name == "gull sp."] <- "gull sp.*"
-  df$Common.Name[df$Common.Name == "Hawk, Red-tailed"] <- "Hawk, Red-tailed*"
-  df$Common.Name[df$Common.Name == "Heron, Great Blue"] <- "Heron, Great Blue*"
-  df$Common.Name[df$Common.Name == "Mallard"] <- "Mallard*"
-  df$Common.Name[df$Common.Name == "Swallow, Barn"] <- "Swallow, Barn*"
-  df$Common.Name[df$Common.Name == "Swallow, Tree"] <- "Swallow, Tree*"
+  for (row in 1:nrow(names)) {
+    ebird <- names[row, "ebird_name"]
+    common_name  <- names[row, "common_name"]
+    df$Common.Name[df$Common.Name == ebird] <- common_name
+  }
+  
+  
+  
+  
+  
   
   return(df)
   
